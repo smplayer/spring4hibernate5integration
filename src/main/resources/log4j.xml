@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" >
+<log4j:configuration>
+
+	<!-- 控制台输出配置 -->
+	<appender name="console.log" 
+		class="org.apache.log4j.ConsoleAppender">
+		<!-- 输出格式设置 -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<!-- %d:时间 %t:线程 %p:级别 %c:类名 %m:信息 %n:换行 -->
+			<param name="ConversionPattern" 
+				value="%d [%t] %p : %c - %m%n" />
+		</layout>
+	</appender>
+	
+	<!-- 文件输出配置 -->
+	<appender name="file.log" class="org.apache.log4j.FileAppender">
+		<param name="File" value="log/log.html" />
+		<!-- 设置是否追加文件内容 -->
+		<param name="Append" value="false" />
+		<layout class="org.apache.log4j.HTMLLayout" />
+	</appender>
+	
+	<!-- 滚动文件输出配置,可以输出多个文件,当一个文件写满了会建个新文件写 -->
+	<appender name="rollingFile.log" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="log/rollingLog.log" />
+		<param name="Append" value="false" />
+		<!-- 最大保留文件数 -->
+		<param name="MaxBackupIndex" value="10" />
+		<!-- 文件的最大尺寸 -->
+		<param name="MaxFileSize" value="100" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{HH:mm:ss,SSS} [%t] %p - %m%n" />
+		</layout>
+	</appender>
+	
+	<!-- 针对包来配置
+	<category name="demo.log4j">
+		<level value="ERROR" />
+		<appender-ref ref="rollingFile.log" /> 
+		<appender-ref ref="console.log" />
+	</category>
+	-->
+	 
+	<!-- 针对全局来配置
+	-->
+	<root>
+		<level value="DEBUG" />
+		<!--<level value="ERROR" />-->
+		<appender-ref ref="console.log" />
+		<appender-ref ref="rollingFile.log" />
+	</root>
+</log4j:configuration>
